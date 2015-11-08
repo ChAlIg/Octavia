@@ -9,12 +9,13 @@
 		public var ySpeed: Number; //current y velocity
 		private var rotationInRadiansMinus; //convenient to store our rotation in radians instead of degrees
 		public var where: Level; //current x velocity
-
+		
+		public var damage: int; //current x velocity
 		private var lifetime: int;
 		public var death: Boolean = false;
 
 		//our constructor requires: the stage, the position of the bullet, and the direction the bullet should be facing
-		public function Bullet_pistol(level:Level, X: int, Y: int, rotationInDegrees: Number, life:int): void {
+		public function Bullet_pistol(level:Level, X: int, Y: int, rotationInDegrees: Number, life:int, fdamage:int = 3): void {
 			
 			this.rotation = rotationInDegrees;
 			this.rotationInRadiansMinus = (rotationInDegrees - 90) * Math.PI / 180; //convert degrees to radians, for trigonometry
@@ -22,6 +23,7 @@
 			this.y = Y + Math.sin(rotationInRadiansMinus)*25;
 			lifetime = life;
 			where = level;
+			damage = fdamage;
 		}
 		public function loop(): void {
 			xSpeed = Math.cos(rotationInRadiansMinus) * speed; //uses the cosine to get the xVel from the speed and rotation

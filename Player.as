@@ -16,6 +16,9 @@
 			this.y = Y;
 		}
 		public function loop(): void {
+			if (health <= 0) {
+				death = true;
+			}
 			if (energy < energyMax) {
 				++energy;
 			}
@@ -24,7 +27,7 @@
 			}
 		}
 		public function onHit(bullet:Bullet_pistol): void {
-			death = true;
+			health -= bullet.damage;
 		}
 	}
 }
