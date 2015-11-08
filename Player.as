@@ -24,7 +24,7 @@
 			}
 		}
 		public function onHit(bullet:Bullet_pistol): void {
-			
+			death = true;
 		}
 	}
 }

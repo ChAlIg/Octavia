@@ -28,33 +28,40 @@
 			addChild(ambient);
 			walls = new Walls(0, 0);
 			addChild(walls);
-			trash = new Trash(320, 240);
+			trash = new Trash(this, 320, 240);
 			addChild(trash);
 			unitList.push(trash);
-			trash = new Trash(234, 556);
+			trash = new Trash(this, 234, 556);
 			addChild(trash);
 			unitList.push(trash);
-			trash = new Trash(34, 766);
+			trash = new Trash(this, 34, 766);
 			addChild(trash);
 			unitList.push(trash);
-			trash = new Trash(457, 23);
+			trash = new Trash(this, 457, 23);
 			addChild(trash);
 			unitList.push(trash);
-			trash = new Trash(345, 423);
+			trash = new Trash(this, 345, 423);
 			addChild(trash);
 			unitList.push(trash);
-			trash = new Trash(264, 567);
+			trash = new Trash(this, 264, 567);
 			addChild(trash);
 			unitList.push(trash);
-			trash = new Trash(32, 43);
+			trash = new Trash(this, 32, 43);
 			addChild(trash);
 			unitList.push(trash);
-			trash = new Trash(123, 123);
+			trash = new Trash(this, 123, 123);
 			addChild(trash);
 			unitList.push(trash);
-			trash = new Trash(400, 550);
+			trash = new Trash(this, 400, 550);
 			addChild(trash);
 			unitList.push(trash);
+			for (i = 0; i <=800; i += 200) {
+				for (j = 0; j <= 600; j += 200) {
+					trash = new Trash(this, i, j);
+					addChild(trash);
+					unitList.push(trash);
+				}
+			}
 			player = new Player(400, 550);
 			addChild(player);
 			unitList.push(player);
