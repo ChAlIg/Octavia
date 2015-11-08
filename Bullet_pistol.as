@@ -4,7 +4,7 @@
 	import flash.display.DisplayObject;
 	
 	public class Bullet_pistol extends MovieClip {
-		private var speed: Number = 15; //speed that the bullet will travel at
+		private var speed: Number = 10; //speed that the bullet will travel at
 		public var xSpeed: Number; //current x velocity
 		public var ySpeed: Number; //current y velocity
 		private var rotationInRadiansMinus; //convenient to store our rotation in radians instead of degrees
