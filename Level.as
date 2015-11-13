@@ -8,6 +8,7 @@
 	import flash.geom.Point;
 
 	public class Level extends MovieClip {
+		public var game: Game;
 		public var trash: Trash;
 		public var player: Player;
 		public var ambient: Ambient;
@@ -21,7 +22,8 @@
 		private var i: int;
 		private var j: int;
 
-		public function Level(X: int, Y: int): void {
+		public function Level(main:Game, X: int, Y: int): void {
+			game = main;
 			this.x = X;
 			this.y = Y;
 			ambient = new Ambient(0, 0);
@@ -62,7 +64,7 @@
 					unitList.push(trash);
 				}
 			}
-			player = new Player(this, 400, 550);
+			player = new Player(game, this, 400, 550);
 			addChild(player);
 			unitList.push(player);
 			info = new Info(0, 0);

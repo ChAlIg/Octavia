@@ -19,8 +19,6 @@
 		public var rotator: Matrix;
 		var point: Point;
 
-		var playerPoint: Point = new Point(400, 550);
-
 		public var leftPressed: Boolean = false;
 		public var rightPressed: Boolean = false;
 		public var upPressed: Boolean = false;
@@ -30,7 +28,6 @@
 		public var leftMousePressed: Boolean = false;
 
 		public var key: KeyObject;
-		public var speed: Number = 5;
 		private var sqrt2: Number = Math.sqrt(2);
 		public var roll: int = 0;
 		public var jumpAccelerator: int = 3;
@@ -47,10 +44,9 @@
 		public var coursor: Coursor;
 
 		public function Game(): void {
-			level = new Level(0, 0);
+			level = new Level(this, 0, 0);
 			addChild(level);
-			coursor = new Coursor(400, 510);
-			addChild(coursor);
+			
 			facet = new Facet(0, 0);
 			addChild(facet);
 
@@ -62,7 +58,7 @@
 			key = new KeyObject(stage);
 			addEventListener(Event.ENTER_FRAME, loopGame, false, 0, true);
 			
-            stage.addEventListener(MouseEvent.RIGHT_CLICK, onRightClick);
+            stage.addEventListener(MouseEvent.RIGHT_CLICK, onRightClick); //присутствие этой строки отключает стандартное контекстное меню adobe flash, вызываемое в проигрывателе на правую кнопку мыши
         
 		}
 		
@@ -80,7 +76,7 @@
 		public function loopGame(e: Event): void {
 			
 			checkKeypresses();
-			token = false;
+			/*token = false;
 			number = speed / sqrt2;
 
 			if (qPressed) {
@@ -175,7 +171,7 @@
 			
 			if (leftMousePressed) {
 				shootingBullet();
-			}
+			}*/
 
 			level.loop(); //запуск функции ниже уровнем, отвечающей за запуск соответствующих функций всех юнитов
 
@@ -222,10 +218,10 @@
 		public function toggleFullscreen(e: MouseEvent): void {
 			stage.displayState = StageDisplayState.FULL_SCREEN;
 			stage.mouseLock = true;
-			stage.addEventListener(MouseEvent.MOUSE_MOVE, rotateAndCoursor);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, level.player.rotateAndCoursor);
 		}
 
-		public function rotateAndCoursor(e: MouseEvent): void {
+		/*public function rotateAndCoursor(e: MouseEvent): void {
 
 			point = new Point(level.player.x, level.player.y);
 			rotSpeed = -e.movementX / 2;
@@ -246,13 +242,13 @@
 			coursor.moving(e.movementY);
 
 		}
-		/*public function shootBullet(e: MouseEvent): void {
+		public function shootBullet(e: MouseEvent): void {
 			if (level.player.energy >= 0) {
 				var bullet_pistol: Bullet_pistol = new Bullet_pistol(stage, level.player.x, level.player.y, level.player.rotation + (Math.random() * 30 - 15) * (coursor.scaleX - 1));
 				level.units.push(bullet_pistol); //add this bullet to the bulletList array
 				level.addChild(bullet_pistol);
 			}
-		}*/
+		}
 		public function shootingBullet(): void {
 			if ((level.player.energy >= 0) && (level.player.shotDelay == 0)) {
 				var bullet_pistol: Bullet_pistol = new Bullet_pistol(level, level.player.x, level.player.y, level.player.rotation + (Math.random() * 30 - 15) * (coursor.scaleX - 1), 12 + Math.round((510 - coursor.y)/15));
@@ -260,6 +256,6 @@
 				level.addChild(bullet_pistol);
 				level.player.shotDelay = 8;
 			}
-		}
+		}*/
 	}
 }
