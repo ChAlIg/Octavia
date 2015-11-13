@@ -55,13 +55,19 @@
 			addChild(facet);
 
 			addEventListener(MouseEvent.CLICK, toggleFullscreen);
-			stage.addEventListener(FullScreenEvent.FULL_SCREEN, onFullscreen);
 			//stage.addEventListener(MouseEvent.CLICK, shootBullet, false, 0, true);
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, leftMousePressing, false, 0, true);
 			stage.addEventListener(MouseEvent.MOUSE_UP, leftMouseUnpressing, false, 0, true);
 
 			key = new KeyObject(stage);
 			addEventListener(Event.ENTER_FRAME, loopGame, false, 0, true);
+			
+            stage.addEventListener(MouseEvent.RIGHT_CLICK, onRightClick);
+        
+		}
+		
+		private function onRightClick(e:MouseEvent):void {
+            trace("Hello right click :)");
 		}
 		
 		public function leftMousePressing(e: MouseEvent): void {
@@ -214,21 +220,11 @@
 		}
 
 		public function toggleFullscreen(e: MouseEvent): void {
-			if (stage.displayState == StageDisplayState.FULL_SCREEN) {
-				stage.displayState = StageDisplayState.NORMAL;
-			} else {
-				stage.displayState = StageDisplayState.FULL_SCREEN;
-			}
+			stage.displayState = StageDisplayState.FULL_SCREEN;
+			stage.mouseLock = true;
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, rotateAndCoursor);
 		}
 
-		public function onFullscreen(e: FullScreenEvent): void {
-			if (e.fullScreen) {
-				stage.mouseLock = true;
-				stage.addEventListener(MouseEvent.MOUSE_MOVE, rotateAndCoursor);
-			} else {
-				stage.removeEventListener(MouseEvent.MOUSE_MOVE, rotateAndCoursor);
-			}
-		}
 		public function rotateAndCoursor(e: MouseEvent): void {
 
 			point = new Point(level.player.x, level.player.y);

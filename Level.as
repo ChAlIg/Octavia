@@ -62,7 +62,7 @@
 					unitList.push(trash);
 				}
 			}
-			player = new Player(400, 550);
+			player = new Player(this, 400, 550);
 			addChild(player);
 			unitList.push(player);
 			info = new Info(0, 0);
@@ -71,49 +71,23 @@
 		}
 		public function loop(): void {
 
-			if (bulletList.length > 0) //if there are any bullets in the bullet list
+			
+			
+			for (i = unitList.length - 1; i >= 0; --i) //for each one
 			{
-				for (i = bulletList.length - 1; i >= 0; --i) //for each one
-				{
-					bulletList[i].loop(); //call its loop() function
-					
-					point = localToGlobal(new Point(bulletList[i].x, bulletList[i].y));
-					if (walls.hitTestPoint(point.x, point.y, true)) {
-						bulletList[i].death = true;
-					} else {
-						for (j = unitList.length - 1; j >= 0; --j) {
-							if (unitList[j].hitTestPoint(point.x, point.y, true)) {
-								bulletList[i].death = true;
-								unitList[j].onHit(bulletList[i]);
-							}
-						}
-					}
-					
-					if (bulletList[i].death) {
-						little_explosion = new Little_explosion();
-						little_explosion.x = bulletList[i].x;
-						little_explosion.y = bulletList[i].y;
-						addChild(little_explosion);
-						removeChild(bulletList[i]);
-						bulletList.splice(i, 1);
-					}
+				unitList[i].loop();
+				if (unitList[i].death) {
+					unitList[i].destroy();
+					unitList.splice(i, 1);
 				}
 			}
 			
-			if (unitList.length > 0) //if there are any units in the unit list
+			for (i = bulletList.length - 1; i >= 0; --i) //for each one
 			{
-				for (i = unitList.length - 1; i >= 0; --i) //for each one
-				{
-					if (unitList[i].death) {
-						var normal_explosion:Normal_explosion = new Normal_explosion();
-						normal_explosion.x = unitList[i].x;
-						normal_explosion.y = unitList[i].y;
-						addChild(normal_explosion);
-						removeChild(unitList[i]);
-						unitList.splice(i, 1);
-					} else {
-						unitList[i].loop();
-					}
+				bulletList[i].loop();
+				if (bulletList[i].death) {
+					bulletList[i].destroy();
+					bulletList.splice(i, 1);
 				}
 			}
 			
