@@ -51,6 +51,9 @@
 			addEventListener(Event.ENTER_FRAME, loopGame, false, 0, true);
 			
             stage.addEventListener(MouseEvent.RIGHT_CLICK, onRightClick); //присутствие этой строки отключает стандартное контекстное меню adobe flash, вызываемое в проигрывателе на правую кнопку мыши
+			
+			addChild (level.player.facet);
+			addChild (level.player.coursor);
         
 		}
 		

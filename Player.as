@@ -16,7 +16,7 @@
 		public var death: Boolean = false;
 		
 		public var energyMax: int = 190;
-		public var healthMax: int = 10;
+		public var healthMax: int = 100;
 		public var jumpCost: int = 100;
 		public var speed: Number = 5;
 		public var playerPoint: Point = new Point(400, 550);
@@ -48,9 +48,9 @@
 			game = main;
 			coursor = new Coursor(400, 510);
 			facet = new Facet(0, 0);
-			game.addChild(coursor);
-			game.swapChildren(coursor, coursor);
+			//game.addChild(coursor);
 			//game.addChild(facet);
+			
 			
 			//stage.addEventListener(MouseEvent.MOUSE_MOVE, rotateAndCoursor);
 		}
