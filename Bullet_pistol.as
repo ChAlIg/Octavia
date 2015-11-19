@@ -6,33 +6,36 @@
 	import flash.geom.Point;
 	
 	public class Bullet_pistol extends MovieClip {
-		private var speed: Number = 10; //speed that the bullet will travel at
-		public var xSpeed: Number; //current x velocity
-		public var ySpeed: Number; //current y velocity
-		private var rotationInRadiansMinus; //convenient to store our rotation in radians instead of degrees
-		public var level: Level; //current x velocity
 		
-		public var damage: int; //current x velocity
+		public var pace: Point = new Point(0,0);
+		public var level: Level;
+		
+		public var damage: int;
 		private var lifetime: int;
 		public var death: Boolean = false;
 
-		//our constructor requires: the stage, the position of the bullet, and the direction the bullet should be facing
-		public function Bullet_pistol(where:Level, X: int, Y: int, rotationInDegrees: Number, life:int, fdamage:int = 3): void {
+		public function Bullet_pistol(where:Level, X: int, Y: int, rotationInDegrees: Number, life:int, theDamage:int = 3, theSpeed:Number = 10): void {
 			
-			this.rotation = rotationInDegrees;
-			this.rotationInRadiansMinus = (rotationInDegrees - 90) * Math.PI / 180; //convert degrees to radians, for trigonometry
-			this.x = X + Math.cos(rotationInRadiansMinus)*20;
-			this.y = Y + Math.sin(rotationInRadiansMinus)*20;
+			rotation = rotationInDegrees;
+			var rotationRequired : Number = (rotationInDegrees - 90) * Math.PI / 180;
+			pace.x = Math.cos(rotationRequired)*theSpeed;
+			pace.y = Math.sin(rotationRequired)*theSpeed;
+			x = X + Math.cos(rotationRequired)*20;
+			y = Y + Math.sin(rotationRequired)*20;
 			lifetime = life;
 			level = where;
-			damage = fdamage;
+			damage = theDamage;
 		}
+		
+		
 		public function loop(): void {
-			xSpeed = Math.cos(rotationInRadiansMinus) * speed; //uses the cosine to get the xVel from the speed and rotation
-			ySpeed = Math.sin(rotationInRadiansMinus) * speed; //uses the sine to get the yVel
-			
-			x += xSpeed; //updates the position
-			y += ySpeed;
+			x += pace.x;
+			y += pace.y;
+			if (pace.y < 0) {
+				rotation = 450 - (180/Math.PI) * Math.acos (pace.x / Math.sqrt (pace.x * pace.x + pace.y * pace.y));
+			} else {
+				rotation = 90 + (180/Math.PI) * Math.acos (pace.x / Math.sqrt (pace.x * pace.x + pace.y * pace.y));
+			}
 			
 			var point:Point = level.localToGlobal(new Point(x, y));
 			if (level.walls.hitTestPoint(point.x, point.y, true))

@@ -11,6 +11,7 @@
 	public class Player extends MovieClip {
 		public var level: Level;
 		public var game: Game;
+		public var facet: Facet;
 		
 		public var death: Boolean = false;
 		
@@ -46,7 +47,10 @@
 			level = where;
 			game = main;
 			coursor = new Coursor(400, 510);
+			facet = new Facet(0, 0);
 			game.addChild(coursor);
+			game.swapChildren(coursor, coursor);
+			//game.addChild(facet);
 			
 			//stage.addEventListener(MouseEvent.MOUSE_MOVE, rotateAndCoursor);
 		}

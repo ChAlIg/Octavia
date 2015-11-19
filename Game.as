@@ -15,7 +15,6 @@
 
 	public class Game extends MovieClip {
 		public var level: Level;
-		public var facet: Facet;
 		public var rotator: Matrix;
 		var point: Point;
 
@@ -28,9 +27,6 @@
 		public var leftMousePressed: Boolean = false;
 
 		public var key: KeyObject;
-		private var sqrt2: Number = Math.sqrt(2);
-		public var roll: int = 0;
-		public var jumpAccelerator: int = 3;
 
 		public var i: int;
 		public var j: int;
@@ -39,17 +35,13 @@
 		public var number2: Number;
 		public var number3: Number;
 		public var token:Boolean = false;
-
-		public var rotSpeed: Number;
-		public var coursor: Coursor;
+		
+		public var currentPlayer:Boolean = false;
 
 		public function Game(): void {
 			level = new Level(this, 0, 0);
 			addChild(level);
 			
-			facet = new Facet(0, 0);
-			addChild(facet);
-
 			addEventListener(MouseEvent.CLICK, toggleFullscreen);
 			//stage.addEventListener(MouseEvent.CLICK, shootBullet, false, 0, true);
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, leftMousePressing, false, 0, true);

@@ -22,8 +22,9 @@
 			
 			health -= bullet.damage;
 			var bullet_pistol: Bullet_pistol;
-			for (var i:int = 0; i < 360; i += 60) {
-				bullet_pistol = new Bullet_pistol(level, x, y, rotation + i, 20);
+			var j:int = (Math.random()*60);
+			for (var i:int = 0; i < 6; ++i) {
+				bullet_pistol = new Bullet_pistol(level, x, y, j + i*60, 20);
 				level.bulletList.push(bullet_pistol);
 				level.addChild(bullet_pistol);
 			}
