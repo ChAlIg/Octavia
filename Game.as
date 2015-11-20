@@ -54,6 +54,8 @@
 			
 			addChild (level.player.facet);
 			addChild (level.player.coursor);
+			
+			stage.addEventListener(MouseEvent.CLICK, level.player.shootingBullet, false, 0, true);
         
 		}
 		

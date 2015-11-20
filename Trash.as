@@ -1,9 +1,14 @@
 ﻿package {
 	import flash.display.MovieClip;
+	import flash.geom.Transform; 
+	import flash.geom.ColorTransform; 
 
 	public class Trash extends MovieClip {
 		
 		public var level: Level;
+		public var usualColour: ColorTransform = new ColorTransform ();
+		public var hitTimer: int = 0;
+		public var redOnHit: ColorTransform = new ColorTransform (2.5);
 		
 		public var death: Boolean = false;
 		public var health: int = 10;
@@ -14,6 +19,13 @@
 			level = where;
 		}
 		public function loop(): void {
+			if (hitTimer == 1) {
+				--hitTimer;
+				this.transform.colorTransform = usualColour;
+			} else if (hitTimer) {
+				--hitTimer
+				this.transform.colorTransform = redOnHit;
+			}
 			if (health <= 0) {
 				death = true;
 			}
@@ -28,6 +40,7 @@
 				level.bulletList.push(bullet_pistol);
 				level.addChild(bullet_pistol);
 			}
+			hitTimer = 5;
 		}
 		public function destroy(): void {
 			/*var normal_explosion:Normal_explosion = new Normal_explosion();

@@ -31,11 +31,7 @@
 		public function loop(): void {
 			x += pace.x;
 			y += pace.y;
-			if (pace.y < 0) {
-				rotation = 450 - (180/Math.PI) * Math.acos (pace.x / Math.sqrt (pace.x * pace.x + pace.y * pace.y));
-			} else {
-				rotation = 90 + (180/Math.PI) * Math.acos (pace.x / Math.sqrt (pace.x * pace.x + pace.y * pace.y));
-			}
+			rotation = Math.atan2(pace.x, -pace.y) * 180 / Math.PI;
 			
 			var point:Point = level.localToGlobal(new Point(x, y));
 			if (level.walls.hitTestPoint(point.x, point.y, true))

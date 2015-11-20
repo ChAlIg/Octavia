@@ -64,7 +64,7 @@
 					unitList.push(trash);
 				}
 			}
-			player = new Player(game, this, 400, 550);
+			player = new Player(game, this);
 			addChild(player);
 			unitList.push(player);
 			info = new Info(0, 0);
