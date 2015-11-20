@@ -49,10 +49,8 @@
 			
 		}
 		public function destroy(): void {
-			/*var little_explosion:Little_explosion = new Little_explosion();
-			little_explosion.x = x;
-			little_explosion.y = y;
-			level.addChild(little_explosion);*/
+			var explosion_basic:Explosion_basic = new Explosion_basic(x, y);
+			level.addChild(explosion_basic);
 			level.removeChild(this);
 		}
 	}

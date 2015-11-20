@@ -10,10 +10,10 @@
 	public class Level extends MovieClip {
 		public var game: Game;
 		public var trash: Trash;
-		public var player: Player;
+		public var player1: Player1;
+		public var player2: Player2;
 		public var ambient: Ambient;
 		public var walls: Walls;
-		public var little_explosion: Little_explosion;
 		public var bulletList: Array = [];
 		public var unitList: Array = [];
 		public var point: Point;
@@ -64,16 +64,19 @@
 					unitList.push(trash);
 				}
 			}
-			player = new Player(game, this);
-			addChild(player);
-			unitList.push(player);
+			player1 = new Player1(game, this);
+			addChild(player1);
+			unitList.push(player1);
+			player2 = new Player2(game, this);
+			addChild(player2);
+			unitList.push(player2);
 			info = new Info(0, 0);
 			addChild(info);
 			
+			game.playerList.push(player1, player2);
+			
 		}
 		public function loop(): void {
-
-			
 			
 			for (i = unitList.length - 1; i >= 0; --i) //for each one
 			{

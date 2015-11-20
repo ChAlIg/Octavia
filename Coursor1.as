@@ -2,19 +2,19 @@
 
 	import flash.display.MovieClip;
 
-	public class Coursor extends MovieClip {
+	public class Coursor1 extends MovieClip {
 
 		var number: Number;
-		var player: Player;
+		var player: Player1;
 
-		public function Coursor(X: int, Y: int, thePlayer:Player) {
-			this.x = X;
-			this.y = Y;
+		public function Coursor1(X: int, Y: int, thePlayer:Player1) {
+			x = X;
+			y = Y;
 			c2.alpha = 0;
 			c3.alpha = 0;
 			player = thePlayer;
 		}
-		/*public function moving(dy: Number) {
+		public function moving(dy: Number) {
 			y += dy;
 			if (y > 510)
 				y = 510;
@@ -37,22 +37,6 @@
 			if (number < 0)
 				number = 0;
 			c3.alpha = number / 100;
-		}*/
-		public function moving(dx:Number, dy: Number) {
-			if (x+dx > 800)
-				x = 800;
-			else if (x+dx < 0)
-				x = 0;
-			else
-				x += dx;
-			
-			if (y+dy > 600)
-				y = 600;
-			else if (y+dy < 0)
-				y = 0;
-			else
-				y += dy;
-			rotation = player.rotation;
 		}
 
 	}

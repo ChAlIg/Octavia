@@ -11,10 +11,10 @@
 	import flash.geom.Transform; 
 	import flash.geom.ColorTransform; 
 
-	public class Player extends MovieClip {
+	public class Player2 extends MovieClip {
 		public var level: Level;
 		public var game: Game;
-		public var facet: Facet;
+		public var facet: Facet2;
 		
 		public var death: Boolean = false;
 		
@@ -42,19 +42,21 @@
 		public var jumpAccelerator: int = 3;
 		
 		public var rotSpeed: Number;
-		public var coursor: Coursor;
+		public var coursor: Coursor2;
 		
 		public var usualColour: ColorTransform = new ColorTransform ();
 		public var hitTimer: int = 0;
 		public var redOnHit: ColorTransform = new ColorTransform (2.5);
+		
+		public var activity: Boolean = false;
 
-		public function Player(main:Game, where:Level, X: int = 400, Y: int = 300): void {
+		public function Player2(main:Game, where:Level, X: int = 400, Y: int = 300): void {
 			this.x = X;
 			this.y = Y;
 			level = where;
 			game = main;
-			coursor = new Coursor(400, 300, this);
-			facet = new Facet(0, 0);
+			coursor = new Coursor2(400, 300, this);
+			facet = new Facet2(0, 0);
 			
 			//stage.addEventListener(MouseEvent.MOUSE_MOVE, rotateAndCoursor);
 		}
@@ -75,43 +77,54 @@
 			
 			if (shotDelay > 0)
 				--shotDelay;
-			
-			number = speed / sqrt2;
-			point = level.localToGlobal(new Point(x, y));
+			if (activity) {
+				token = false;
+				number = speed / sqrt2;
+				point = level.localToGlobal(new Point(x, y));
 
 				if (game.leftPressed) {
 					if (game.upPressed && !level.walls.hitTestPoint(point.x - 13 / sqrt2, point.y - 13 / sqrt2, true)) {
 						level.x += number;
 						level.y += number;
+						token = true;
 					} else if (game.downPressed && !level.walls.hitTestPoint(point.x - speed / sqrt2, point.y + speed / sqrt2, true)) {
 						level.x += number;
 						level.y -= number;
+						token = true;
 					} else if (!level.walls.hitTestPoint(point.x - 13, point.y, true)) {
 						level.x += speed;
+						token = true;
 					}
 				} else if (game.rightPressed) {
 					if (game.downPressed && !level.walls.hitTestPoint(point.x + 13 / sqrt2, point.y + 13 / sqrt2, true)) {
 						level.x -= number;
 						level.y -= number;
+						token = true;
 					} else if (game.upPressed && !level.walls.hitTestPoint(point.x + 13 / sqrt2, point.y - 13 / sqrt2, true)) {
 						level.x -= number;
 						level.y += number;
+						token = true;
 					} else if (!level.walls.hitTestPoint(point.x + 13, point.y, true)) {
 						level.x -= speed;
+						token = true;
 					}
 				} else if (game.upPressed && !level.walls.hitTestPoint(point.x, point.y - 13, true)) {
 					level.y += speed;
+					token = true;
 				} else if (game.downPressed && !level.walls.hitTestPoint(point.x, point.y + 13, true)) {
 					level.y -= speed;
+					token = true;
 				}
-				
-				point = level.globalToLocal(playerPoint);
-				x = point.x;
-				y = point.y; //помещение игрока в то место в локальной системе координат, которое соответствует месту игрока в глобальных координатах (playerPoint) 
-			
-			/*if (game.leftMousePressed) {
-				shootingBullet();
-			}*/
+					
+				if (token == true) {
+					point = level.globalToLocal(playerPoint);
+					x = point.x;
+					y = point.y; //помещение игрока в то место в локальной системе координат, которое соответствует месту игрока в глобальных координатах (Player2Point) 
+				}
+				if (game.leftMousePressed) {
+					shootingBullet();
+				}
+			}
 
 		}
 		
@@ -122,23 +135,23 @@
 
 		}
 		
-		/*public function shootingBullet(): void {
+		public function shootingBullet(): void {
 			if ((energy >= 0) && (shotDelay == 0)) {
-				var bullet_pistol: Bullet_pistol = new Bullet_pistol(level, x, y, rotation + (Math.random() * 30 - 15) * (coursor.scaleX - 1), 12 + Math.round((510 - coursor.y)/15));
+				var bullet_pistol: Bullet_pistol = new Bullet_pistol(level, x, y, rotation + (Math.random() * 14 - 7)*Math.sqrt((coursor.x-400)*(coursor.x-400) + (coursor.y-300)*(coursor.y-300))/400 , 10 + Math.sqrt((coursor.x-400)*(coursor.x-400) + (coursor.y-300)*(coursor.y-300))/10);
 				level.bulletList.push(bullet_pistol); //add this bullet to the bulletList array
 				level.addChild(bullet_pistol);
-				shotDelay = 8;
+				shotDelay = 15;
 			}
-		}*/
+		}
 		
-		public function shootingBullet(e: MouseEvent): void {
+		/*public function shootingBullet(e: MouseEvent): void {
 			if ((energy >= 0) && (shotDelay == 0)) {
 				var bullet_pistol: Bullet_pistol = new Bullet_pistol(level, x, y, rotation + (Math.random() * 14 - 7)*Math.sqrt((coursor.x-400)*(coursor.x-400) + (coursor.y-300)*(coursor.y-300))/400 , 12 + Math.sqrt((coursor.x-400)*(coursor.x-400) + (coursor.y-300)*(coursor.y-300))/10);
 				level.bulletList.push(bullet_pistol); //add this bullet to the bulletList array
 				level.addChild(bullet_pistol);
 				shotDelay = 8;
 			}
-		}
+		}*/
 		
 		public function onHit(bullet:Bullet_pistol): void {
 			health -= bullet.damage;
@@ -146,11 +159,37 @@
 		}
 		
 		public function destroy(): void {
-			/*var normal_explosion:Normal_explosion = new Normal_explosion();
-			normal_explosion.x = x;
-			normal_explosion.y = y;
-			level.addChild(normal_explosion);*/
+			var explosion_basic:Explosion_basic = new Explosion_basic(x, y, 5);
+			level.addChild(explosion_basic);
 			level.removeChild(this);
+		}
+		
+		public function toggleActivityUp(): void {
+			
+			point = level.localToGlobal(new Point(x, y));
+			level.x += playerPoint.x - point.x;
+			level.y += playerPoint.y - point.y;
+			
+			point = new Point(x, y);
+			
+			var t: Matrix = level.transform.matrix;
+			point = t.transformPoint(point);
+			t.translate(-point.x, -point.y);
+			t.rotate(-level.rotation * (Math.PI / 180));
+			t.translate(point.x, point.y);
+			level.transform.matrix = t;
+			
+			game.addChild(facet);
+			game.addChild(coursor);
+			game.parent.addEventListener(MouseEvent.MOUSE_MOVE, level.player2.rotateAndCoursor);
+			activity = true;
+		}
+		
+		public function toggleActivityDown(): void {
+			game.removeChild(facet);
+			game.removeChild(coursor);
+			game.parent.removeEventListener(MouseEvent.MOUSE_MOVE, level.player2.rotateAndCoursor);
+			activity = false;
 		}
 		
 	}

@@ -43,10 +43,8 @@
 			hitTimer = 5;
 		}
 		public function destroy(): void {
-			/*var normal_explosion:Normal_explosion = new Normal_explosion();
-			normal_explosion.x = x;
-			normal_explosion.y = y;
-			level.addChild(normal_explosion);*/
+			var explosion_basic:Explosion_basic = new Explosion_basic(x, y, 5);
+			level.addChild(explosion_basic);
 			level.removeChild(this);
 		}
 	}
