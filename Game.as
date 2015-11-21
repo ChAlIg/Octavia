@@ -40,12 +40,20 @@
 		
 		public var activePlayer:int = -1;
 		public var playerList: Array = [];
+		
+		public var button_basic:Button_basic;
 
 		public function Game(): void {
 			level = new Level(this, 0, 0);
 			addChild(level);
+			button_basic = new Button_basic();
+			button_basic.x = 400;
+			button_basic.y = 300;
+			button_basic.txt.text = "Кликните на меня, чтобы начать \n WASD - движение \n QE - перекаты \n ЛКМ - стрельба \n Z - первый игрок \n X - второй игрок"
+			addChild(button_basic);
+			button_basic.addEventListener(MouseEvent.CLICK, toggleFullscreen);
 			
-			addEventListener(MouseEvent.CLICK, toggleFullscreen);
+			//addEventListener(MouseEvent.CLICK, toggleFullscreen);
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, leftMousePressing, false, 0, true);
 			stage.addEventListener(MouseEvent.MOUSE_UP, leftMouseUnpressing, false, 0, true);
 
@@ -138,6 +146,7 @@
 		public function toggleFullscreen(e: MouseEvent): void {
 			stage.displayState = StageDisplayState.FULL_SCREEN;
 			stage.mouseLock = true;
+			button_basic.play();
 		}
 	}
 }
